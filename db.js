@@ -2,9 +2,9 @@ const mysql = require('mysql');
 
 function createConnection() {
     const connection = mysql.createConnection({
-        host: 'bzi6bwexyzolq1o5xosq-mysql.services.clever-cloud.com',
-        user: 'uc2lfkroezutenes',
-        password: 'pVtNAhJMisk4TGkcOefd',
+        host: '34.176.129.126',
+        user: 'root',
+        password: "#Klu{t@)3n?det|E",
         database: 'bzi6bwexyzolq1o5xosq',
         reconnectInterval: 1000, // Intervalo de tiempo para intentar reconectar (en milisegundos)
     });
