@@ -23,4 +23,11 @@ router.put('/tareas/:id', tareasController.actualizarTarea);
 router.post('/tareas', tareasController.crearTarea);
 router.delete('/tareas/:id', tareasController.eliminarTarea);
 
+// Importa el controlador de semana
+const semanaController = require('./controllers/semanaController');
+
+// Ruta para obtener todas las tareas
+router.get('/semana', semanaController.obtenerSemana);
+
+// Exporta el módulo de rutas
 module.exports = router;
