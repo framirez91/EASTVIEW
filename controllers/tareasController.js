@@ -1,4 +1,4 @@
-const db = require('../src/db'); // Ruta al archivo de conexión a la base de datos
+const db = require('../db'); // Ruta al archivo de conexión a la base de datos
 
 function obtenerTodasLasTareas(req, res) {
     db.query('SELECT * FROM tareas', (err, resultados) => {

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const routes = require('../routes'); // Importa tus rutas
-const db = require('../src/db'); 
+const routes = require('./routes'); // Importa tus rutas
+const db = require('./db'); 
 const bodyParser = require('body-parser');
 
 
