@@ -25,6 +25,7 @@ function obtenerTarea(req, res) {
 function actualizarTarea(req, res) {
     const datosActualizados = {
         id_ciudadano: req.body.id_ciudadano,
+        nombre_ciudadano: req.body.nombre_ciudadano,
         id_dia_semana: req.body.id_dia_semana,
         tarea: req.body.tarea,
         estado: req.body.estado
@@ -44,6 +45,8 @@ function actualizarTarea(req, res) {
 function crearTarea(req, res) {
     const nuevaTarea = {
         id_ciudadano: req.body.id_ciudadano,
+        nombre_ciudadano: req.body.nombre_ciudadano,
+
         id_dia_semana: req.body.id_dia_semana,
         tarea: req.body.tarea,
         estado: req.body.estado
