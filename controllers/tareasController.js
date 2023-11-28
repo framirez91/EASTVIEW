@@ -1,7 +1,7 @@
 const db = require('../db'); // Ruta al archivo de conexión a la base de datos
 
 function obtenerTodasLasTareas(req, res) {
-    db.query('SELECT * FROM tareas', (err, resultados) => {
+    db.query('SELECT t.*, c.nombre AS nombre_ciudadano FROM tareas t INNER JOIN ciudadanos c ON t.id_ciudadano = c.id_ciudadano', (err, resultados) => {
         if (err) {
             console.error('Error al obtener las tareas:', err);
             res.status(500).send('Error al obtener las tareas');
@@ -10,6 +10,7 @@ function obtenerTodasLasTareas(req, res) {
         res.status(200).json(resultados);
     });
 }
+
 
 function obtenerTarea(req, res) {
     db.query('SELECT * FROM tareas WHERE id_tarea = ?', [req.params.id], (err, resultados) => {
@@ -25,19 +26,34 @@ function obtenerTarea(req, res) {
 function actualizarTarea(req, res) {
     const datosActualizados = {
         id_ciudadano: req.body.id_ciudadano,
-        nombre_ciudadano: req.body.nombre_ciudadano,
         id_dia_semana: req.body.id_dia_semana,
         tarea: req.body.tarea,
         estado: req.body.estado
     };
 
-    db.query('UPDATE tareas SET ? WHERE id_tarea = ?', [datosActualizados, req.params.id], (err, resultados) => {
+    db.query('UPDATE tareas SET ? WHERE id_tarea = ?', [datosActualizados, req.params.id], async (err, resultados) => {
         if (err) {
             console.error('Error al actualizar la tarea:', err);
             res.status(500).send('Error al actualizar la tarea');
             return;
         }
-        res.status(200).json({ message: 'Tarea actualizada exitosamente' });
+
+        try {
+            
+            const actualizarNombreCiudadano = await new Promise((resolve, reject) => {
+                db.query('UPDATE tareas t INNER JOIN ciudadanos c ON t.id_ciudadano = c.id_ciudadano SET t.nombre_ciudadano = c.nombre WHERE t.id_tarea = ?', req.params.id, (error, result) => {
+                    if (error) {
+                        console.error('Error al actualizar el nombre del ciudadano en la tarea:', error);
+                        reject('Error al actualizar el nombre del ciudadano en la tarea');
+                    }
+                    resolve(result);
+                });
+            });
+
+            res.status(200).json({ message: 'Tarea actualizada exitosamente' });
+        } catch (error) {
+            res.status(500).send(error);
+        }
     });
 }
 
