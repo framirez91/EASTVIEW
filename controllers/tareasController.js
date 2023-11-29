@@ -23,7 +23,7 @@ function obtenerTarea(req, res) {
     });
 }
 
-function actualizarTarea(req, res) {
+const actualizarTarea = (req, res) => {
     const datosActualizados = {
         id_ciudadano: req.body.id_ciudadano,
         id_dia_semana: req.body.id_dia_semana,
@@ -40,22 +40,17 @@ function actualizarTarea(req, res) {
 
         try {
             
-            const actualizarNombreCiudadano = await new Promise((resolve, reject) => {
-                db.query('UPDATE tareas t INNER JOIN ciudadanos c ON t.id_ciudadano = c.id_ciudadano SET t.nombre_ciudadano = c.nombre WHERE t.id_tarea = ?', req.params.id, (error, result) => {
-                    if (error) {
-                        console.error('Error al actualizar el nombre del ciudadano en la tarea:', error);
-                        reject('Error al actualizar el nombre del ciudadano en la tarea');
-                    }
-                    resolve(result);
-                });
-            });
 
             res.status(200).json({ message: 'Tarea actualizada exitosamente' });
         } catch (error) {
             res.status(500).send(error);
         }
     });
-}
+};
+
+module.exports = {
+    actualizarTarea
+};
 
 
 function crearTarea(req, res) {
